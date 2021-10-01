@@ -1,11 +1,18 @@
 import React from 'react';
 import { Login } from './Login';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { LinkTo } from '@storybook/addon-links/react';
+import { linkTo } from '@storybook/addon-links';
 
 export default {
   title: 'Auth/Login',
   component: Login
+}
+
+const AutoLinkTo = ({ kind, story }) => {
+  React.useEffect(() => {
+    linkTo(kind, story);
+  })
+  return null;
 }
 
 const withMemoryRouter = (StoryComponent, { parameters }) => {
@@ -26,7 +33,7 @@ const withMemoryRouter = (StoryComponent, { parameters }) => {
     return (
       <MemoryRouter initialEntries={[encodeURI(route)]}>
         <Route path={path}>
-          <LinkTo kind={redirectComponent} story={redirectStory} />
+          <AutoLinkTo kind={redirectComponent} story={redirectStory} />
         </Route>
       </MemoryRouter>
     );
